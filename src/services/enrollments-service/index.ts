@@ -1,6 +1,6 @@
 import { Address, Enrollment } from '@prisma/client';
 import { request } from '@/utils/request';
-import { invalidDataError, notFoundError, requestError } from '@/errors';
+import { invalidDataError, notFoundError } from '@/errors';
 import addressRepository, { CreateAddressParams } from '@/repositories/address-repository';
 import enrollmentRepository, { CreateEnrollmentParams } from '@/repositories/enrollment-repository';
 import { exclude } from '@/utils/prisma-utils';
@@ -10,7 +10,7 @@ async function getAddressFromCEP(cep: any) {
   if (result.status === 400) {
     throw invalidDataError(['formato invalido']);
   } else if (result.data.erro === true || result.data.erro === 'true') {
-    throw requestError(400, 'Bad Request');
+    throw invalidDataError(['CEP inexistente']);
   } else if (!result.data) {
     throw notFoundError();
   }
