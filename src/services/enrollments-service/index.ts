@@ -14,7 +14,6 @@ async function getAddressFromCEP(cep: any) {
   } else if (!result.data) {
     throw notFoundError();
   }
-  console.log(result);
   return {
     bairro: result.data.bairro,
     cidade: result.data.localidade,
